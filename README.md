@@ -45,10 +45,10 @@ are located in the same directory as the other scripts.
 Some old features have not been tested after modifications, 
 including but not limited to:
 
--Admin interface
--Manual team change
--Game modes other than deathmatch and team deathmatch
--DedServerWatcher script
+- Admin interface
+- Manual team change
+- Game modes other than deathmatch and team deathmatch
+- DedServerWatcher script
 
 
 ===== Licensing =====
