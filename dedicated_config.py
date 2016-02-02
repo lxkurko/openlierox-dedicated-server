@@ -74,13 +74,9 @@ LEVELS = [
 # See dedicated_control_presets.py for reference
 PRESETS = [ "Classic" ]
 
-#Some options that are convenient to set here
-#NOTE: Most options are set in options.cfg
+#Some options that should be set, you don't need to touch them in most cases
+#NOTE: Most options are now set in options.cfg
 GLOBAL_SETTINGS = {
-	"GameOptions.Network.ServerName":       "Server Name",
-	"GameOptions.Network.WelcomeMessage":	"Welcome to <server>, <player>",
-	
-	# Various options that should be set, you don't need to touch them in most cases
 	
 	"GameOptions.Network.EnableChat":               0, # No IRC chat needed for ded server
 	"GameOptions.Network.AutoSetupHttpProxy":       0,
