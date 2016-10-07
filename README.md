@@ -48,8 +48,9 @@ including but not limited to:
 - Admin interface
 - Manual team change
 - Game modes other than deathmatch and team deathmatch
+- Having bots on the server
 - DedServerWatcher script
-
+- Compatibility with Windows (some Windows-specific checks have actually been removed)
 
 ===== Licensing =====
 =====================
