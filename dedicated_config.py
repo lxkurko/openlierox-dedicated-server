@@ -7,8 +7,11 @@ import dedicated_control_io as io
 
 SERVER_PORT = 23400 # What port to start server on, 23400 is the default
 
-# Where to log what is happening
+# Files for logging and ranking
+# NOTE: The full path is searched by the game
 LOG_FILE = "dedicated_control.log"
+RANKING_FILE = "pwn0meter.txt"
+RANKING_AUTH_FILE = "pwn0meter_auth.txt"
 
 # Users can enter some commands too
 USER_PREFIX = "!"
@@ -110,7 +113,7 @@ CONTROL_UPDATES_LIST = [
 ]
 
 # Should we kick people that have quotation marks in their names - they don't show up properly in ranking.
-#NOTE: This should not be needed anymore as the quotes can be removed when setting up the name used by the controller... TODO: Or does it work properly?
+#NOTE: This should not be needed anymore as the quotes can be removed when setting up the name used by the controller...
 KICK_QUOTEMARKS = 0 
 
 #Should we make rank manipulation a bit harder by allowing only one player per one IP
@@ -118,7 +121,7 @@ KICK_QUOTEMARKS = 0
 ONE_PLAYER_PER_IP = False
 
 #How long nicks are allowed
-#NOTE: In 0.59, oversized nicks are truncated and this is not needed
+#NOTE: Now oversized nicks are truncated and this is not needed TODO: Remove this?
 MAX_NAME_LENGTH = 20
 
 #Length-based antispam - should we do something to players who send oversized messages and cause excessive lag

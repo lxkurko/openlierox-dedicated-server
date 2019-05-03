@@ -261,7 +261,7 @@ def parseNewWorm(wormID, name):
 		if not name in ranking.auth:
 			ranking.auth[name] = getWormSkin(wormID)
 			try:
-				f = open(io.getWriteFullFileName("pwn0meter_auth.txt"),"a")
+				f = open(io.getWriteFullFileName(cfg.RANKING_AUTH_FILE),"a")
 				try:
 					portalocker.lock(f, portalocker.LOCK_EX)
 				except:
@@ -269,7 +269,7 @@ def parseNewWorm(wormID, name):
 				f.write( name + "\t" + str(ranking.auth[name][0]) + " " + ranking.auth[name][1] + "\n" )
 				f.close()
 			except IOError:
-				msg("ERROR: Unable to open pwn0meter_auth.txt")
+				msg("ERROR: Unable to open ranking authentication file: " + cfg.RANKING_AUTH_FILE)
 		else:
 			if ranking.auth[name] != getWormSkin(wormID):
 				io.kickWorm(wormID, "Player with name %s already registered" % name)
@@ -736,7 +736,7 @@ def parseWormDied(sig):
 		return
 
 	try:
-		f = open(io.getWriteFullFileName("pwn0meter.txt"),"a")
+		f = open(io.getWriteFullFileName(cfg.RANKING_FILE),"a")
 		if not killerID in io.getComputerWormList():
 			try:
 				portalocker.lock(f, portalocker.LOCK_EX)
@@ -745,7 +745,7 @@ def parseWormDied(sig):
 			f.write( time.strftime("%Y-%m-%d %H:%M:%S") + "\t" + worms[deaderID].Name + "\t" + worms[killerID].Name + "\n" )
 		f.close()
 	except IOError:
-		io.msg("ERROR: Unable to open pwn0meter.txt")
+		io.msg("ERROR: Unable to open ranking file: " + cfg.RANKING_FILE)
 
 	if not killerID in io.getComputerWormList():
 		if deaderID == killerID:
