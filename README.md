@@ -35,9 +35,6 @@ in options.cfg.
 like the original scripts. However, mod presets are configured in 
 dedicated_control_presets.py.
 
-- By default, the main script assumes that all configuration scripts
-are located in the same directory as the other scripts. 
-
 
 ===== Untested features =====
 =============================
@@ -50,7 +47,7 @@ including but not limited to:
 - Game modes other than deathmatch and team deathmatch
 - Having bots on the server
 - DedServerWatcher script
-- Compatibility with Windows (some Windows-specific checks have actually been removed)
+- Compatibility with Windows
 
 ===== Licensing =====
 =====================
