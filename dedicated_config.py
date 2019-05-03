@@ -56,6 +56,9 @@ WAIT_BEFORE_GAME_MESSAGE = "Game will start in %i seconds" % WAIT_BEFORE_GAME
 PING_CHECK = 1
 MAX_PING = 1200 # Max ping to auto-kick player
 
+#Should we check the game version and notify those who use outdated or buggy versions
+VERSION_CHECK = 1
+
 # Should we allow !rank user command
 RANKING = 1 
 # Should we authenticate worm by its skin color 

@@ -11,6 +11,7 @@ import threading
 import traceback
 import random
 import subprocess, signal, os.path
+import distutils.version
 #import re	#for regular expression searches
 
 import portalocker
@@ -311,6 +312,25 @@ def parseNewWorm(wormID, name):
 			if worms[w].Ip == wormIP and w != wormID:
 				io.kickWorm(wormID, "only one player per IP address allowed")
 				return
+	
+	#Nag players to download the latest version. 0.58 rc3 may still be in use, and this is less harsh than kicking.
+	#TODO: Do this in a better way?
+	if cfg.VERSION_CHECK:
+		ver = io.getWormVersion(wormID)
+		newest_ver = io.getVar("GameOptions.State.NewestVersion")
+		#Newest version, everything OK
+		if distutils.version.LooseVersion(ver.lower()) == distutils.version.LooseVersion(newest_ver.lower()):
+			pass
+		#Outdated 0.58 versions and older
+		elif distutils.version.LooseVersion(ver.lower()) < distutils.version.LooseVersion(newest_ver.lower()):
+			io.privateMsg(wormID, "You're using an outdated version! Please download " + newest_ver.replace("/"," ").replace("_"," ") + " from http://openlierox.net/")
+		#0.59 b10 and later are buggy
+		elif distutils.version.LooseVersion(ver.lower()) >= distutils.version.LooseVersion("OpenLieroX/0.59_beta10".lower()):
+			io.privateMsg(wormID, "You're using a buggy version of the game! You may want to download " + newest_ver.replace("/"," ").replace("_"," ") + " from http://openlierox.net/")
+		#Other 0.59 versions are not as buggy but they lack the nice updates of 0.58 rc5
+		else:
+			io.privateMsg(wormID, "You seem to be using an experimental version of the game! You may want to download " + newest_ver.replace("/"," ").replace("_"," ") + " from http://openlierox.net/")
+	
 	
 	#Assign team
 	if io.getGameType() == 1:
