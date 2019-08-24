@@ -262,7 +262,8 @@ def parseNewWorm(wormID, name):
 		if not name in ranking.auth:
 			ranking.auth[name] = getWormSkin(wormID)
 			try:
-				f = open(io.getWriteFullFileName(cfg.RANKING_AUTH_FILE),"a")
+				rank_auth_file_path = io.getWriteFullFileName(cfg.RANKING_AUTH_FILE)
+				f = open(rank_auth_file_path,"a")
 				try:
 					portalocker.lock(f, portalocker.LOCK_EX)
 				except:
@@ -270,14 +271,14 @@ def parseNewWorm(wormID, name):
 				f.write( name + "\t" + str(ranking.auth[name][0]) + " " + ranking.auth[name][1] + "\n" )
 				f.close()
 			except IOError:
-				msg("ERROR: Unable to open ranking authentication file: " + cfg.RANKING_AUTH_FILE)
+				io.messageLog("parseNewWorm: Unable to open ranking authentication file: " + cfg.RANKING_AUTH_FILE + " from path: " + rank_auth_file_path, io.LOG_ERROR)
 		else:
 			if ranking.auth[name] != getWormSkin(wormID):
 				io.kickWorm(wormID, "Player with name %s already registered" % name)
 				return
 
 	
-	#Kick players that have forbidden nicks
+	#Notify or kick players that have forbidden nicks
 	if name in cfg.FORBIDDEN_NAMES:
 		if cfg.NAME_CHECK_ACTION == 1:
 			worm.Name = "random" + str(random.randint(0,cfg.NAME_CHECK_RANDOM))	#Assign random name
@@ -756,7 +757,8 @@ def parseWormDied(sig):
 		return
 
 	try:
-		f = open(io.getWriteFullFileName(cfg.RANKING_FILE),"a")
+		rank_file_path = io.getWriteFullFileName(cfg.RANKING_FILE)
+		f = open(rank_file_path,"a")
 		if not killerID in io.getComputerWormList():
 			try:
 				portalocker.lock(f, portalocker.LOCK_EX)
@@ -765,7 +767,7 @@ def parseWormDied(sig):
 			f.write( time.strftime("%Y-%m-%d %H:%M:%S") + "\t" + worms[deaderID].Name + "\t" + worms[killerID].Name + "\n" )
 		f.close()
 	except IOError:
-		io.msg("ERROR: Unable to open ranking file: " + cfg.RANKING_FILE)
+		io.messageLog("parseWormDied: Unable to open ranking file: " + cfg.RANKING_FILE + " from path: " + rank_file_path, io.LOG_ERROR)
 
 	if not killerID in io.getComputerWormList():
 		if deaderID == killerID:

@@ -4,8 +4,10 @@ import dedicated_control_io as io
 def ParseRank(useRatios = True):
         #io.messageLog("ParseRank: Opening ranking file: " + cfg.RANKING_FILE, io.LOG_INFO)
         try:
-            f = open(io.getWriteFullFileName(cfg.RANKING_FILE),"r")
+			rank_file_path = io.getWriteFullFileName(cfg.RANKING_FILE)
+            f = open(rank_file_path,"r")
         except IOError:
+			io.messageLog("ParseRank: Unable to open ranking file: " + cfg.RANKING_FILE + " from path: " + rank_file_path, io.LOG_ERROR)
             return {}
         l = f.readline()
         killers = {}
@@ -124,8 +126,10 @@ def refreshRank(useRatios = True):
 def ParseAuthInfo():
 
         try:
-            f = open(io.getWriteFullFileName(cfg.RANKING_AUTH_FILE),"r")
+            rank_auth_file_path = io.getWriteFullFileName(cfg.RANKING_AUTH_FILE)
+            f = open(rank_auth_file_path,"r")
         except IOError:
+			io.messageLog("ParseAuthInfo: Unable to open ranking authentication file: " + cfg.RANKING_AUTH_FILE + " from path: " + rank_auth_file_path, io.LOG_ERROR)
             return {}
 
         authInfo = {}
