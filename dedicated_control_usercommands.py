@@ -118,7 +118,7 @@ def parseUserCommand(wormid,message):
 					hnd.setTeam(wormid, 3)
 				else:
 					io.privateMsg(wormid, "Invalid team")
-				
+
 		elif cfg.RANKING and cmd in ("rank", "toprank", "ranktotal"):
 			if cmd == "toprank":
 				ranking.firstRank(wormid)
@@ -129,7 +129,12 @@ def parseUserCommand(wormid,message):
 						wormName = " ".join(params).replace("\"", "\'\'")	#Convert double quotes to prevent annoyance
 					ranking.myRank(wormName, wormid)
 			if cmd == "ranktotal":
-				io.privateMsg(wormid, "There are " + str(len(ranking.rank)) + " players in the ranking.")
+				if cfg.NAME_CHECK_ACTION == 1 and cfg.HANDLE_RANDOMS_IN_RANKTOTAL:
+					tmp_rankplayers = sortRankPlayers(randoms=0, random_max = cfg.NAME_CHECK_RANDOM)
+					tmp_rankrandoms = sortRankPlayers(randoms=1, random_max = cfg.NAME_CHECK_RANDOM)
+					io.privateMsg(wormid, "There are " + str(len(tmp_rankplayers)) + " players and " + str(len(tmp_rankrandoms)) + " unnamed players in the ranking.")
+				else:
+					io.privateMsg(wormid, "There are " + str(len(ranking.rank)) + " players in the ranking.")
 			return "none"
 		
 		elif cfg.KICK_VOTING and cmd == "kick":
@@ -234,9 +239,34 @@ def parseUserCommand(wormid,message):
 		return None
 	return "none"
 
-	
 
-	
+#Extra function to separate players with proper name and random players who didn't set their name
+#TODO: Move this somewhere else?
+#TODO: Make this less ugly??
+def sortRankPlayers(randoms, random_max):
+	ret = []
+	for k in ranking.rank.keys():
+		is_random = False
+		try:
+			if k.startswith("random"):
+				#we must handle cases like "randomrandom13" and "random 13" that would pass lstrip() and int()
+				tmpstr = k[6:]	#separate first "random"
+				for c in tmpstr:
+					if c not in ("1","2","3","4","5","6","7","8","9","0"):	#check if non number characters found
+						tmpstr = "xxx"
+						break
+				if tmpstr != "xxx" and int(tmpstr,10) >= 0 and int(tmpstr,10) <= random_max:
+					is_random = True
+		except: #probably not needed... but we will use it anyway
+			pass
+
+		if (is_random and randoms) or (not is_random and not randoms):
+				ret.append(k)
+
+	return ret
+
+
+
 #Admin help
 def adminCommandHelp(wormid):
 	io.privateMsg(wormid, "Admin help:")

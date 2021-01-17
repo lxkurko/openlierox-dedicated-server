@@ -105,6 +105,7 @@ NAME_CHECK_ACTION = 1 # 0=no action, 1=warn and use random rankname, 2=kick
 NAME_CHECK_KICKMSG = "Please create yourself a proper nickname using the Player Profiles menu"
 NAME_CHECK_WARNMSG = "<font color=#FFFF00>Hi! Looks like you are using a default or inappropriate nickname. You can still play here, but your rank will be saved using a random name. For the best game experience, please create yourself a proper nickname using the Player Profiles menu!"
 NAME_CHECK_RANDOM = 1337	#Use this to set the number of possible random names
+HANDLE_RANDOMS_IN_RANKTOTAL = 1	#Count random#### players separately in !ranktotal
 
 # Server/control script updates that players can see using !news
 CONTROL_UPDATES = 0 # Are there any recent updates
