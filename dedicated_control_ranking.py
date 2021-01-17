@@ -147,5 +147,7 @@ def ParseAuthInfo():
 	f.close()
 	return authInfo
 
+io.messageLog("Ranking: Parsing rank data")
 rank = ParseRank()
 auth = ParseAuthInfo()
+io.messageLog("Ranking: Rank data parsing completed")
